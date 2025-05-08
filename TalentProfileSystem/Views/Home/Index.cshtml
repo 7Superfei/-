@@ -1,0 +1,72 @@
+@model List<Employee>
+@{
+    ViewData["Title"] = "首页";
+}
+
+<div class="text-center">
+    <h1 class="display-4">人才画像系统</h1>
+    <p>选择一个员工查看其详细画像</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="input-group">
+            <input type="text" id="searchInput" class="form-control" placeholder="搜索员工姓名...">
+            <button class="btn btn-outline-secondary" type="button" id="searchButton">搜索</button>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>工号</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>部门</th>
+                    <th>职级</th>
+                    <th>入职时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var employee in Model)
+                {
+                    <tr>
+                        <td>@employee.EmployeeId.ToString("D6")</td>
+                        <td>@employee.Name</td>
+                        <td>@employee.Gender</td>
+                        <td>@employee.Department</td>
+                        <td>@employee.PositionLevel</td>
+                        <td>@employee.HireDate.ToString("yyyy-MM-dd")</td>
+                        <td>
+                            <a asp-controller="Profile" asp-action="Employee" asp-route-id="@employee.EmployeeId" class="btn btn-sm btn-primary">查看画像</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $("#searchButton").click(function() {
+                var searchText = $("#searchInput").val().toLowerCase();
+                $("tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+                });
+            });
+            
+            $("#searchInput").on("keyup", function() {
+                var searchText = $(this).val().toLowerCase();
+                $("tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+                });
+            });
+        });
+    </script>
+} 

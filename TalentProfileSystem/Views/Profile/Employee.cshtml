@@ -1,0 +1,167 @@
+@model EmployeeProfileViewModel
+@{
+    ViewData["Title"] = $"{Model.Name} - 个人画像";
+}
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <img src="~/images/default-avatar.png" alt="员工头像" class="rounded-circle" style="width: 150px; height: 150px; object-fit: cover;">
+                </div>
+                <h5 class="card-title">@Model.Name</h5>
+                <p class="card-text">
+                    <strong>工号：</strong>@Model.WorkId<br />
+                    <strong>性别：</strong>@Model.Gender<br />
+                    <strong>部门：</strong>@Model.Department<br />
+                    <strong>职级：</strong>@Model.PositionLevel<br />
+                    <strong>入职时间：</strong>@Model.HireDate.ToString("yyyy-MM-dd")<br />
+                    <strong>电话：</strong>@Model.Phone<br />
+                    <strong>籍贯：</strong>@Model.Birthplace
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">标签信息</h5>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <span class="badge" style="background-color: @tag.Color; margin-right: 5px; margin-bottom: 5px; padding: 8px;">
+                            @tag.Name
+                        </span>
+                    }
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>综合能力评分</h5>
+                        <div class="progress" style="height: 30px;">
+                            <div class="progress-bar" role="progressbar" style="width: @(Model.OverallScore)%;" aria-valuenow="@Model.OverallScore" aria-valuemin="0" aria-valuemax="100">@Model.OverallScore.ToString("F1")</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5>能力雷达图</h5>
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">绩效折线图</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">统计指标</h5>
+            </div>
+            <div class="card-body">
+                <h6>晋升推荐度</h6>
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: @(Model.PromotionRecommendationScore)%;" aria-valuenow="@Model.PromotionRecommendationScore" aria-valuemin="0" aria-valuemax="100">@Model.PromotionRecommendationScore.ToString("F1")</div>
+                </div>
+                
+                <h6>岗位匹配度</h6>
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: @(Model.JobMatchScore)%;" aria-valuenow="@Model.JobMatchScore" aria-valuemin="0" aria-valuemax="100">@Model.JobMatchScore.ToString("F1")</div>
+                </div>
+                
+                <h6>人才稀缺度</h6>
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: @(Model.TalentScarcityScore)%;" aria-valuenow="@Model.TalentScarcityScore" aria-valuemin="0" aria-valuemax="100">@Model.TalentScarcityScore.ToString("F1")</div>
+                </div>
+                
+                <h6>人才保有率</h6>
+                <div class="progress mb-3">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: @(Model.TalentRetentionScore)%;" aria-valuenow="@Model.TalentRetentionScore" aria-valuemin="0" aria-valuemax="100">@Model.TalentRetentionScore.ToString("F1")</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 绩效折线图
+        var performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        var performanceChart = new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: [@Html.Raw(string.Join(",", Model.PerformanceData.Select(p => $"'{p.Month}'")))],
+                datasets: [{
+                    label: '绩效评分',
+                    data: [@string.Join(",", Model.PerformanceData.Select(p => p.Value.ToString()))],
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    fill: false
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 0,
+                        max: 5
+                    }
+                }
+            }
+        });
+        
+        // 能力雷达图
+        var radarCtx = document.getElementById('radarChart').getContext('2d');
+        var radarChart = new Chart(radarCtx, {
+            type: 'radar',
+            data: {
+                labels: ['学历背景', '关键历练', '个人能力', '性格特点', '工作态度', '发展潜力'],
+                datasets: [{
+                    label: '能力指标',
+                    data: [
+                        @Model.RadarChartData.EducationBackground,
+                        @Model.RadarChartData.KeyExperience,
+                        @Model.RadarChartData.PersonalAbility,
+                        @Model.RadarChartData.PersonalityTrait,
+                        @Model.RadarChartData.WorkAttitude,
+                        @Model.RadarChartData.DevelopmentPotential
+                    ],
+                    fill: true,
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    pointBackgroundColor: 'rgb(54, 162, 235)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgb(54, 162, 235)'
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: {
+                            display: true
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                }
+            }
+        });
+    </script>
+} 

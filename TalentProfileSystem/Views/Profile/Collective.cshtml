@@ -1,0 +1,304 @@
+@model CollectiveProfileViewModel
+@{
+    ViewData["Title"] = "集体画像";
+}
+
+<div class="row mb-4">
+    <div class="col-12">
+        <h2>人才分布统计</h2>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">部门分布</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="departmentChart"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">性别分布</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="genderChart"></canvas>
+                <div class="mt-3 text-center">
+                    <p>
+                        <span class="badge bg-primary">男: @Model.GenderDistribution.MalePercentage.ToString("F1")%</span>
+                        <span class="badge bg-info">女: @Model.GenderDistribution.FemalePercentage.ToString("F1")%</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <h2>人才结构分析</h2>
+    </div>
+</div>
+
+<div class="row mb-4">
+    @if (Model.TalentStructureAnalysis.Any())
+    {
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">人才结构状况</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>岗位/职级</th>
+                                    <th>状态</th>
+                                    <th>当前人数</th>
+                                    <th>理想人数</th>
+                                    <th>差值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.TalentStructureAnalysis)
+                                {
+                                    <tr>
+                                        <td>@item.Position</td>
+                                        <td>
+                                            @if (item.Status == "过剩")
+                                            {
+                                                <span class="badge bg-danger">@item.Status</span>
+                                            }
+                                            else if (item.Status == "不足")
+                                            {
+                                                <span class="badge bg-warning">@item.Status</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-success">@item.Status</span>
+                                            }
+                                        </td>
+                                        <td>@item.CurrentCount</td>
+                                        <td>@item.IdealCount</td>
+                                        <td>@item.Difference</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-12">
+            <div class="alert alert-info">
+                暂无人才结构分析数据
+            </div>
+        </div>
+    }
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <h2>突出员工一览</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">明星员工</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.StarEmployees.Any())
+                {
+                    <div class="list-group">
+                        @foreach (var employee in Model.StarEmployees)
+                        {
+                            <a href="/Profile/Employee/@employee.EmployeeId" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">@employee.Name</h6>
+                                    <small>@employee.Score.ToString("F1")</small>
+                                </div>
+                                <p class="mb-1">@employee.Department - @employee.PositionLevel</p>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">暂无数据</p>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">潜力股</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.PotentialEmployees.Any())
+                {
+                    <div class="list-group">
+                        @foreach (var employee in Model.PotentialEmployees)
+                        {
+                            <a href="/Profile/Employee/@employee.EmployeeId" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">@employee.Name</h6>
+                                    <small>@employee.Score.ToString("F1")</small>
+                                </div>
+                                <p class="mb-1">@employee.Department - @employee.PositionLevel</p>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">暂无数据</p>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">晋升推荐</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.PromotionRecommendations.Any())
+                {
+                    <div class="list-group">
+                        @foreach (var employee in Model.PromotionRecommendations)
+                        {
+                            <a href="/Profile/Employee/@employee.EmployeeId" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">@employee.Name</h6>
+                                    <small>@employee.Score.ToString("F1")</small>
+                                </div>
+                                <p class="mb-1">@employee.Department - @employee.PositionLevel</p>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">暂无数据</p>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">离职风险</h5>
+            </div>
+            <div class="card-body">
+                @if (Model.AttritionRiskEmployees.Any())
+                {
+                    <div class="list-group">
+                        @foreach (var employee in Model.AttritionRiskEmployees)
+                        {
+                            <a href="/Profile/Employee/@employee.EmployeeId" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">@employee.Name</h6>
+                                    <small>@employee.Score.ToString("F1")</small>
+                                </div>
+                                <p class="mb-1">@employee.Department - @employee.PositionLevel</p>
+                            </a>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">暂无数据</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 部门分布图表
+        var departmentCtx = document.getElementById('departmentChart').getContext('2d');
+        var departmentData = {
+            labels: [@Html.Raw(string.Join(",", Model.DepartmentDistribution.Select(d => $"'{d.Department}'")))],
+            datasets: [{
+                data: [@string.Join(",", Model.DepartmentDistribution.Select(d => d.Percentage.ToString()))],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(153, 102, 255, 0.7)',
+                    'rgba(255, 159, 64, 0.7)'
+                ],
+                borderWidth: 1
+            }]
+        };
+        
+        var departmentChart = new Chart(departmentCtx, {
+            type: 'pie',
+            data: departmentData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: '部门人数分布'
+                    }
+                }
+            }
+        });
+        
+        // 性别分布图表
+        var genderCtx = document.getElementById('genderChart').getContext('2d');
+        var genderData = {
+            labels: ['男', '女'],
+            datasets: [{
+                data: [
+                    @Model.GenderDistribution.MalePercentage,
+                    @Model.GenderDistribution.FemalePercentage
+                ],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 99, 132, 0.7)'
+                ],
+                borderWidth: 1
+            }]
+        };
+        
+        var genderChart = new Chart(genderCtx, {
+            type: 'pie',
+            data: genderData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: '性别分布'
+                    }
+                }
+            }
+        });
+    </script>
+} 

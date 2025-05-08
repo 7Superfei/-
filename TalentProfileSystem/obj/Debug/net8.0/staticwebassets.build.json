@@ -1,0 +1,331 @@
+{
+  "Version": 1,
+  "Hash": "x62G+c+eXVPftqgbMd23/QV2crcvNIadsDnDGa5JL9U=",
+  "Source": "TalentProfileSystem",
+  "BasePath": "_content/TalentProfileSystem",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "TalentProfileSystem\\wwwroot",
+      "Source": "TalentProfileSystem",
+      "ContentRoot": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\",
+      "BasePath": "_content/TalentProfileSystem",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\css\\site.css",
+      "SourceId": "TalentProfileSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\",
+      "BasePath": "_content/TalentProfileSystem",
+      "RelativePath": "css/site#[.{fingerprint}]?.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "6rn4909bgo",
+      "Integrity": "vrVh65/p7PeFAXeoIKjWoboieqy/bOivzZmIz2Dmkd4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\images\\default-avatar.png",
+      "SourceId": "TalentProfileSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\",
+      "BasePath": "_content/TalentProfileSystem",
+      "RelativePath": "images/default-avatar#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "yu78tspv7y",
+      "Integrity": "Nqnn8clbgv+5l0PgxcTOldg8mkMKrFn4TvPL+rYUUGg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\default-avatar.png"
+    },
+    {
+      "Identity": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\js\\site.js",
+      "SourceId": "TalentProfileSystem",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\",
+      "BasePath": "_content/TalentProfileSystem",
+      "RelativePath": "js/site#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "jzowvq6esl",
+      "Integrity": "gbLXVXCM4LGWX+BPo4uV5BC2plNi+Am+fmReaRAag9I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\site.js"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "css/site.6rn4909bgo.css",
+      "AssetFile": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1239"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vrVh65/p7PeFAXeoIKjWoboieqy/bOivzZmIz2Dmkd4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 02:51:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6rn4909bgo"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-vrVh65/p7PeFAXeoIKjWoboieqy/bOivzZmIz2Dmkd4="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1239"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"vrVh65/p7PeFAXeoIKjWoboieqy/bOivzZmIz2Dmkd4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 02:51:56 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-vrVh65/p7PeFAXeoIKjWoboieqy/bOivzZmIz2Dmkd4="
+        }
+      ]
+    },
+    {
+      "Route": "images/default-avatar.png",
+      "AssetFile": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\images\\default-avatar.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Nqnn8clbgv+5l0PgxcTOldg8mkMKrFn4TvPL+rYUUGg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 02:53:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Nqnn8clbgv+5l0PgxcTOldg8mkMKrFn4TvPL+rYUUGg="
+        }
+      ]
+    },
+    {
+      "Route": "images/default-avatar.yu78tspv7y.png",
+      "AssetFile": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\images\\default-avatar.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Nqnn8clbgv+5l0PgxcTOldg8mkMKrFn4TvPL+rYUUGg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 02:53:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "yu78tspv7y"
+        },
+        {
+          "Name": "label",
+          "Value": "images/default-avatar.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Nqnn8clbgv+5l0PgxcTOldg8mkMKrFn4TvPL+rYUUGg="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.js",
+      "AssetFile": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\js\\site.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "647"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gbLXVXCM4LGWX+BPo4uV5BC2plNi+Am+fmReaRAag9I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 02:52:17 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gbLXVXCM4LGWX+BPo4uV5BC2plNi+Am+fmReaRAag9I="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.jzowvq6esl.js",
+      "AssetFile": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\wwwroot\\js\\site.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "647"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gbLXVXCM4LGWX+BPo4uV5BC2plNi+Am+fmReaRAag9I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Thu, 08 May 2025 02:52:17 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jzowvq6esl"
+        },
+        {
+          "Name": "label",
+          "Value": "js/site.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gbLXVXCM4LGWX+BPo4uV5BC2plNi+Am+fmReaRAag9I="
+        }
+      ]
+    }
+  ]
+}

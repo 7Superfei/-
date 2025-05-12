@@ -1,0 +1,482 @@
+@model CollectiveProfileViewModel
+@{
+    ViewData["Title"] = "集体画像";
+}
+
+<div class="container-fluid p-3">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4 bg-light-gray">
+                <!-- 部门人员分布 -->
+                <div class="row g-0">
+                    <!-- 部门分布图表 -->
+                    <div class="col-md-4">
+                        <div class="card m-3 h-100">
+                            <div class="card-body">
+                                <h6 class="mb-3">部门分布</h6>
+                                <div class="chart-container">
+                                    <canvas id="departmentChart"></canvas>
+                                </div>
+                                <div class="chart-legend mt-3">
+                                    @foreach (var dept in Model.DepartmentDistribution)
+                                    {
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
+                                            <div class="d-flex align-items-center">
+                                                <span class="legend-dot" style="background-color: @GetColor(dept.Department)"></span>
+                                                <span>@dept.Department</span>
+                                            </div>
+                                            <span>@dept.Percentage%</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 人才标签和高绩效人才池 -->
+                    <div class="col-md-8">
+                        <div class="card m-3 h-100">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 mb-4">
+                                        <h6 class="mb-3">人才标签</h6>
+                                        <div class="tag-container">
+                                            <div class="tag-item" style="background-color: #8BC34A;">
+                                                <span>明星员工</span>
+                                                <span class="tag-count">x12</span>
+                                            </div>
+                                            <div class="tag-item" style="background-color: #42A5F5;">
+                                                <span>潜力股</span>
+                                                <span class="tag-count">x12</span>
+                                            </div>
+                                            <div class="tag-item" style="background-color: #AB47BC;">
+                                                <span>绩效优秀</span>
+                                                <span class="tag-count">x12</span>
+                                            </div>
+                                            <div class="tag-item" style="background-color: #FFD54F;">
+                                                <span>表现突出</span>
+                                                <span class="tag-count">x12</span>
+                                            </div>
+                                            <div class="tag-item" style="background-color: #FF7043;">
+                                                <span>高职风险</span>
+                                                <span class="tag-count">x12</span>
+                                            </div>
+                                            <div class="tag-item" style="background-color: #EC407A;">
+                                                <span>技能推荐</span>
+                                                <span class="tag-count">x12</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 人才概况 -->
+                                    <div class="col-12 mb-4">
+                                        <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <h6>人才概况</h6>
+                                            </div>
+                                            <div class="col-12 mb-4">
+                                                <div class="d-flex gap-2">
+                                                    <div class="metric-box">
+                                                        <span>人才稀缺度：</span>
+                                                        <span class="metric-value">xx</span>
+                                                    </div>
+                                                    <div class="metric-box">
+                                                        <span>xx</span>
+                                                    </div>
+                                                    <div class="metric-box">
+                                                        <span>xx</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <div class="d-flex gap-2">
+                                                    <div class="metric-box">
+                                                        <span>人才充足度：</span>
+                                                        <span class="metric-value">xx</span>
+                                                    </div>
+                                                    <div class="metric-box">
+                                                        <span>xx</span>
+                                                    </div>
+                                                    <div class="metric-box">
+                                                        <span>xx</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 高绩效人才池 -->
+                                    <div class="col-12 mb-4">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h6 class="mb-0 talent-pool-toggle @(ViewBag.ShowHighPerformance ? "" : "collapsed")" id="talentPoolToggle">
+                                                高绩效人才池
+                                                <span class="toggle-icon ml-2">▼</span>
+                                            </h6>
+                                        </div>
+                                        <div class="talent-pool-content @(ViewBag.ShowHighPerformance ? "" : "collapsed")" id="talentPoolContent">
+                                            <div class="table-responsive">
+                                                <table class="table table-sm table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>排名</th>
+                                                            <th>姓名</th>
+                                                            <th>部门</th>
+                                                            <th>能力评分</th>
+                                                            <th>操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @for (int i = 0; i < ViewBag.HighPerformanceProfiles.Count && i < 5; i++)
+                                                        {
+                                                            var profile = ViewBag.HighPerformanceProfiles[i];
+                                                            <tr>
+                                                                <td>@(i + 1)</td>
+                                                                <td>@profile.Name</td>
+                                                                <td>@profile.Department</td>
+                                                                <td>
+                                                                    <div class="progress">
+                                                                        <div class="progress-bar" role="progressbar" 
+                                                                            style="width: @(profile.OverallScore)%;" 
+                                                                            aria-valuenow="@profile.OverallScore" 
+                                                                            aria-valuemin="0" 
+                                                                            aria-valuemax="100">@profile.OverallScore.ToString("F1")</div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <a asp-controller="Profile" asp-action="Employee" asp-route-id="@profile.EmployeeId" class="btn btn-sm btn-primary">查看</a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 操作按钮 -->
+                                    <div class="col-12 mt-2">
+                                        <div class="d-flex gap-2">
+                                            <button class="btn btn-primary">空缺职位优化建议</button>
+                                            <button class="btn btn-primary">人才定向培养建议</button>
+                                            <button class="btn btn-primary">人才结构优化建议</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 数据分析区域 -->
+                <div class="row g-0">
+                    <!-- 年龄分布 -->
+                    <div class="col-md-3">
+                        <div class="card m-3">
+                            <div class="card-body">
+                                <h6 class="mb-3">年龄分布</h6>
+                                <div class="chart-container">
+                                    <div class="age-chart">
+                                        <div class="chart-label">25以下</div>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar" style="width: 20%" role="progressbar"></div>
+                                        </div>
+                                        
+                                        <div class="chart-label">25-35</div>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-purple" style="width: 40%" role="progressbar"></div>
+                                        </div>
+                                        
+                                        <div class="chart-label">35-45</div>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-primary" style="width: 30%" role="progressbar"></div>
+                                        </div>
+                                        
+                                        <div class="chart-label">45以上</div>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-info" style="width: 10%" role="progressbar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 层级分布 -->
+                    <div class="col-md-3">
+                        <div class="card m-3">
+                            <div class="card-body">
+                                <h6 class="mb-3">层级分布</h6>
+                                <div class="chart-container">
+                                    <div class="level-chart">
+                                        <div class="chart-label">初级</div>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-info" style="width: 40%" role="progressbar"></div>
+                                        </div>
+                                        
+                                        <div class="chart-label">中级</div>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-purple" style="width: 30%" role="progressbar"></div>
+                                        </div>
+                                        
+                                        <div class="chart-label">高级</div>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-success" style="width: 20%" role="progressbar"></div>
+                                        </div>
+                                        
+                                        <div class="chart-label">专家级</div>
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar bg-warning" style="width: 10%" role="progressbar"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 学历分布 -->
+                    <div class="col-md-3">
+                        <div class="card m-3">
+                            <div class="card-body">
+                                <h6 class="mb-3">学历分布</h6>
+                                <div class="chart-container">
+                                    <canvas id="educationChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 性别分布 -->
+                    <div class="col-md-3">
+                        <div class="card m-3">
+                            <div class="card-body">
+                                <h6 class="mb-3">性别分布</h6>
+                                <div class="gender-chart">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>男：</span>
+                                        <span>50%</span>
+                                    </div>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar bg-primary" style="width: 50%" role="progressbar"></div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>女：</span>
+                                        <span>50%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" style="width: 50%" role="progressbar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 部门分布图表
+        var departmentCtx = document.getElementById('departmentChart').getContext('2d');
+        var departmentData = {
+            labels: [@Html.Raw(string.Join(",", Model.DepartmentDistribution.Select(d => $"'{d.Department}'")))],
+            datasets: [{
+                data: [@string.Join(",", Model.DepartmentDistribution.Select(d => d.Percentage.ToString()))],
+                backgroundColor: [
+                    '#4166f5',
+                    '#42A5F5',
+                    '#26C6DA',
+                    '#9CCC65',
+                    '#FFD54F'
+                ],
+                borderWidth: 0
+            }]
+        };
+        
+        var departmentChart = new Chart(departmentCtx, {
+            type: 'pie',
+            data: departmentData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                cutout: '0%'
+            }
+        });
+        
+        // 学历分布图表
+        var educationCtx = document.getElementById('educationChart').getContext('2d');
+        var educationChart = new Chart(educationCtx, {
+            type: 'pie',
+            data: {
+                labels: ['博士', '硕士', '本科', '大专'],
+                datasets: [{
+                    data: [5, 25, 50, 20],
+                    backgroundColor: [
+                        '#4166f5',
+                        '#42A5F5',
+                        '#26C6DA',
+                        '#9CCC65'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                cutout: '0%'
+            }
+        });
+        
+        // 高绩效人才池折叠/展开功能
+        document.addEventListener('DOMContentLoaded', function() {
+            var talentPoolToggle = document.getElementById('talentPoolToggle');
+            var talentPoolContent = document.getElementById('talentPoolContent');
+            
+            talentPoolToggle.addEventListener('click', function() {
+                talentPoolToggle.classList.toggle('collapsed');
+                talentPoolContent.classList.toggle('collapsed');
+            });
+        });
+    </script>
+    
+    <style>
+        /* 自定义样式 */
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .bg-light-gray {
+            background-color: #f5f5f5;
+            box-shadow: none;
+        }
+        
+        .chart-container {
+            height: 180px;
+            position: relative;
+        }
+        
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .tag-count {
+            margin-left: 10px;
+            font-weight: 600;
+        }
+        
+        .metric-box {
+            background-color: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 8px;
+            flex: 1;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .bg-purple {
+            background-color: #9c27b0;
+        }
+        
+        .chart-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        /* 高绩效人才池样式 */
+        .talent-pool-toggle {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .talent-pool-toggle .toggle-icon {
+            margin-left: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .talent-pool-toggle.collapsed .toggle-icon {
+            transform: rotate(-90deg);
+        }
+        
+        .talent-pool-content {
+            max-height: 500px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .talent-pool-content.collapsed {
+            max-height: 0;
+        }
+        
+        .ml-2 {
+            margin-left: 0.5rem;
+        }
+    </style>
+}
+
+@functions {
+    public string GetColor(string department)
+    {
+        var colors = new Dictionary<string, string>
+        {
+            { "技术部", "#4166f5" },
+            { "产品部", "#42A5F5" },
+            { "市场部", "#26C6DA" },
+            { "销售部", "#9CCC65" },
+            { "人力资源部", "#FFD54F" }
+        };
+        
+        if (colors.ContainsKey(department))
+            return colors[department];
+            
+        return "#4166f5"; // 默认颜色
+    }
+} 

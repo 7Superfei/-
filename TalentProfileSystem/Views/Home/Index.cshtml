@@ -1,0 +1,253 @@
+@model List<Employee>
+@{
+    ViewData["Title"] = "人才画像系统";
+}
+
+<div class="container-fluid p-0">
+    <div class="row g-0">
+        <!-- 左侧导航 -->
+        <div class="col-md-2 bg-light sidebar">
+            <div class="p-3">
+                <div class="sidebar-header mb-4">
+                    <h6 class="mb-3">筛选条件</h6>
+                    <div class="mb-3">
+                        <select class="form-select" id="departmentFilter">
+                            <option selected>部门筛选</option>
+                            <option value="技术部">技术部</option>
+                            <option value="产品部">产品部</option>
+                            <option value="市场部">市场部</option>
+                            <option value="销售部">销售部</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="输入工号">
+                            <button class="btn btn-outline-primary" type="button">搜索</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="employee-list mt-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="fw-bold">序号</span>
+                        <span class="fw-bold">员工</span>
+                    </div>
+                    @for (int i = 1; i <= 3; i++)
+                    {
+                        <div class="d-flex justify-content-between align-items-center mb-2 p-2 employee-list-item @(i == 1 ? "active" : "")">
+                            <span>@i</span>
+                            <span>员工详细画像视图</span>
+                        </div>
+                    }
+                </div>
+                
+                <nav class="mt-3">
+                    <ul class="pagination justify-content-center pagination-sm mb-0">
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- 主要内容区 -->
+        <div class="col-md-10">
+            <div class="main-content p-3">
+                <!-- 顶部员工搜索 -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <input type="text" id="searchInput" class="form-control" placeholder="搜索员工姓名...">
+                                    <button class="btn btn-primary" type="button" id="searchButton">搜索</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 员工卡片组 -->
+                <div class="row employee-cards">
+                    @foreach (var employee in Model)
+                    {
+                        <div class="col-md-4 mb-4 employee-card-item">
+                            <div class="card h-100 employee-profile-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <div class="employee-avatar me-3">
+                                            <div class="avatar-circle">
+                                                <i class="bi bi-person-fill"></i>
+                                            </div>
+                                        </div>
+                                        <div class="employee-info">
+                                            <h5 class="employee-name">@employee.Name</h5>
+                                            <p class="employee-title text-muted mb-0">@employee.Department - @employee.PositionLevel</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="employee-details">
+                                        <div class="detail-item">
+                                            <span class="label">工号：</span>
+                                            <span class="value">@($"{employee.EmployeeId:D6}")</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="label">部门：</span>
+                                            <span class="value">@employee.Department</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="label">职级：</span>
+                                            <span class="value">@employee.PositionLevel</span>
+                                        </div>
+                                        <div class="detail-item">
+                                            <span class="label">入职时间：</span>
+                                            <span class="value">@employee.HireDate.ToString("yyyy-MM-dd")</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent text-end">
+                                    <a asp-controller="Profile" asp-action="Employee" asp-route-id="@employee.EmployeeId" class="btn btn-sm btn-primary">查看画像</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                
+                <!-- 分页导航 -->
+                <nav aria-label="员工列表分页">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        @for (int i = 2; i <= 5; i++)
+                        {
+                            <li class="page-item"><a class="page-link" href="#">@i</a></li>
+                        }
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $("#searchButton").click(function() {
+                var searchText = $("#searchInput").val().toLowerCase();
+                $(".employee-card-item").each(function() {
+                    var cardText = $(this).text().toLowerCase();
+                    $(this).toggle(cardText.indexOf(searchText) > -1);
+                });
+            });
+            
+            $("#searchInput").on("keyup", function() {
+                var searchText = $(this).val().toLowerCase();
+                $(".employee-card-item").each(function() {
+                    var cardText = $(this).text().toLowerCase();
+                    $(this).toggle(cardText.indexOf(searchText) > -1);
+                });
+            });
+            
+            // 过滤部门
+            $("#departmentFilter").change(function() {
+                var department = $(this).val();
+                if (department === "部门筛选") {
+                    $(".employee-card-item").show();
+                } else {
+                    $(".employee-card-item").each(function() {
+                        var deptText = $(this).find(".employee-details").text();
+                        $(this).toggle(deptText.indexOf(department) > -1);
+                    });
+                }
+            });
+        });
+    </script>
+    
+    <style>
+        /* 自定义样式 */
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .sidebar {
+            background-color: #fff;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+            min-height: calc(100vh - 60px);
+        }
+        
+        .employee-profile-card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .employee-profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .avatar-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #4166f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .employee-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        
+        .employee-title {
+            font-size: 13px;
+        }
+        
+        .employee-details .detail-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+        
+        .employee-details .detail-item:last-child {
+            border-bottom: none;
+        }
+        
+        .label {
+            color: #666;
+        }
+        
+        .value {
+            font-weight: 500;
+        }
+        
+        .employee-list-item {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .employee-list-item:hover, .employee-list-item.active {
+            background-color: #f0f4ff;
+            color: #4166f5;
+        }
+        
+        .pagination .page-link {
+            margin: 0 3px;
+            border-radius: 5px;
+        }
+    </style>
+} 

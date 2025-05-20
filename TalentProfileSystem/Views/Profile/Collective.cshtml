@@ -1,0 +1,529 @@
+@model CollectiveProfileViewModel
+@{
+    ViewData["Title"] = "集体画像";
+    
+    // 获取当前选中的部门
+    var currentDepartment = ViewBag.CurrentDepartment ?? "全公司";
+    var allDepartments = ViewBag.AllDepartments as List<string> ?? new List<string>();
+
+    // 获取图表颜色
+    string GetColor(string key, int index = 0)
+    {
+        var colors = new[] { "#4166f5", "#42A5F5", "#26C6DA", "#9CCC65", "#FFD54F", "#FF7043", "#EC407A", "#AB47BC" };
+        
+        if (key == "技术部") return "#4166f5";
+        if (key == "设计部") return "#42A5F5";
+        if (key == "市场部") return "#26C6DA";
+        if (key == "产品部") return "#9CCC65";
+        if (key == "运营部") return "#FFD54F";
+        if (key == "销售部") return "#FF7043";
+        
+        return colors[index % colors.Length];
+    }
+    
+    // 根据人才稀缺状态获取CSS类
+    string GetTalentShortageClass(string status)
+    {
+        return status switch
+        {
+            "极度稀缺" => "bg-danger",
+            "稀缺" => "bg-warning",
+            "较稀缺" => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+    
+    // 根据人才冗余状态获取CSS类
+    string GetTalentSurplusClass(string status)
+    {
+        return status switch
+        {
+            "极度冗余" => "bg-danger",
+            "冗余" => "bg-warning",
+            "较冗余" => "bg-info",
+            _ => "bg-secondary"
+        };
+    }
+    
+    // 获取全公司数据，确保顶部板块始终显示全公司数据
+    var companyModel = ViewBag.CompanyModel as CollectiveProfileViewModel ?? Model;
+}
+
+<div class="container-fluid p-3">
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">人才集体画像</h4>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 上半部分 - 始终显示全公司数据 -->
+    <div class="row mb-4">
+        <!-- 左侧：部门分布板块 -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body pb-2">
+                    <h6 class="mb-2">部门分布 (全公司)</h6>
+                    <!-- 饼状图及图例 -->
+                    <div class="chart-container" style="height: 160px;">
+                        <canvas id="departmentChart"></canvas>
+                    </div>
+                    <div class="chart-legend mt-2 small">
+                        <div class="row">
+                            @foreach (var dept in companyModel.DepartmentDistribution)
+                            {
+                                <div class="col-md-6">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <div class="d-flex align-items-center">
+                                            <span class="legend-dot" style="background-color: @GetColor(dept.Department)"></span>
+                                            <span>@dept.Department</span>
+                                        </div>
+                                        <span>@dept.Percentage%</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    
+                    <!-- 人才稀缺部门和人才冗余岗位 -->
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="small-card">
+                                <h6 class="mb-2">人才稀缺部门</h6>
+                                @if (companyModel.TalentShortages.Any())
+                                {
+                                    <div class="talent-status-list">
+                                        @foreach (var item in companyModel.TalentShortages)
+                                        {
+                                            <div class="talent-status-item @GetTalentShortageClass(item.Status)">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>@item.Department</span>
+                                                    <span>@item.Status</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between small mt-1">
+                                                    <span>当前: @item.CurrentPercentage%</span>
+                                                    <span>理想: @item.MinIdealPercentage%-@item.MaxIdealPercentage%</span>
+                                                </div>
+                                                <div class="progress mt-1" style="height: 5px;">
+                                                    <div class="progress-bar @GetTalentShortageClass(item.Status)" 
+                                                         style="width: @Math.Min(item.Deviation * 5, 100)%" 
+                                                         role="progressbar"></div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="text-muted small mb-0">暂无人才稀缺部门</p>
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="small-card">
+                                <h6 class="mb-2">人才冗余部门</h6>
+                                @if (companyModel.TalentSurpluses.Any())
+                                {
+                                    <div class="talent-status-list">
+                                        @foreach (var item in companyModel.TalentSurpluses)
+                                        {
+                                            <div class="talent-status-item @GetTalentSurplusClass(item.Status)">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>@item.Department</span>
+                                                    <span>@item.Status</span>
+                                                </div>
+                                                <div class="d-flex justify-content-between small mt-1">
+                                                    <span>当前: @item.CurrentPercentage%</span>
+                                                    <span>理想: @item.MinIdealPercentage%-@item.MaxIdealPercentage%</span>
+                                                </div>
+                                                <div class="progress mt-1" style="height: 5px;">
+                                                    <div class="progress-bar @GetTalentSurplusClass(item.Status)" 
+                                                         style="width: @Math.Min(item.Deviation * 5, 100)%" 
+                                                         role="progressbar"></div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <p class="text-muted small mb-0">暂无人才冗余部门</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 右侧：突出人才板块 -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <!-- 突出人才标签 -->
+                    <h6 class="mb-3">突出员工一览 (@currentDepartment)</h6>
+                    <div class="tag-container">
+                        <a href="@Url.Action("OutstandingEmployees", "Profile", new { category = "star" })" class="tag-item" style="background-color: #8BC34A;">
+                            <span>明星员工</span>
+                            <span class="tag-count">x@(Model.StarEmployees?.Count ?? 0)</span>
+                        </a>
+                        <a href="@Url.Action("OutstandingEmployees", "Profile", new { category = "potential" })" class="tag-item" style="background-color: #42A5F5;">
+                            <span>潜力股</span>
+                            <span class="tag-count">x@(Model.PotentialEmployees?.Count ?? 0)</span>
+                        </a>
+                        <a href="@Url.Action("OutstandingEmployees", "Profile", new { category = "highperformance" })" class="tag-item" style="background-color: #AB47BC;">
+                            <span>绩效优秀</span>
+                            <span class="tag-count">x@(Model.HighPerformanceEmployees?.Count ?? 0)</span>
+                        </a>
+                        <a href="@Url.Action("OutstandingEmployees", "Profile", new { category = "attritionrisk" })" class="tag-item" style="background-color: #FF7043;">
+                            <span>高离职风险</span>
+                            <span class="tag-count">x@(Model.AttritionRiskEmployees?.Count ?? 0)</span>
+                        </a>
+                        <a href="@Url.Action("OutstandingEmployees", "Profile", new { category = "underperforming" })" class="tag-item" style="background-color: #e57373;">
+                            <span>表现欠佳</span>
+                            <span class="tag-count">x@(Model.UnderperformingEmployees?.Count ?? 0)</span>
+                        </a>
+                    </div>
+                    
+                    <!-- 高绩效人才池 -->
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <h6 class="mb-0">高绩效人才池</h6>
+                        <a href="@Url.Action("HighPerformance", "Profile")" class="btn btn-sm btn-primary">
+                            <i class="bi bi-star-fill me-1"></i>查看详情
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 下半部分 - 根据所选部门展示数据 -->
+    <div class="row" id="departmentData">
+        <div class="col-12 mb-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">部门详细数据 - @currentDepartment</h5>
+                <div class="filter-section">
+                    <select id="departmentFilter" class="form-select form-select-sm" onchange="changeDepartment(this.value)">
+                        @if (currentDepartment == "全公司")
+                        {
+                            <option value="全公司" selected>全公司</option>
+                        }
+                        else
+                        {
+                            <option value="全公司">全公司</option>
+                        }
+                        
+                        @foreach (var dept in allDepartments)
+                        {
+                            if (currentDepartment == dept)
+                            {
+                                <option value="@dept" selected>@dept</option>
+                            }
+                            else
+                            {
+                                <option value="@dept">@dept</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 年龄分布 -->
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="mb-3">年龄分布</h6>
+                    <div class="chart-container age-chart-container">
+                        <div class="age-chart">
+                            @foreach (var age in Model.AgeDistribution)
+                            {
+                                <div class="chart-label">@age.AgeRange</div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar" style="width: @age.Percentage%" role="progressbar" 
+                                        aria-valuenow="@age.Percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <small>@age.Count 人</small>
+                                    <small>@age.Percentage%</small>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 层级分布 -->
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="mb-3">层级分布</h6>
+                    <div class="chart-container level-chart-container">
+                        <div class="level-chart">
+                            @foreach (var level in Model.PositionLevelDistribution)
+                            {
+                                <div class="chart-label">@level.Level</div>
+                                <div class="progress mb-2">
+                                    <div class="progress-bar bg-purple" style="width: @level.Percentage%" role="progressbar" 
+                                        aria-valuenow="@level.Percentage" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <small>@level.Count 人</small>
+                                    <small>@level.Percentage%</small>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 学历分布 -->
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="mb-3">学历分布</h6>
+                    <div class="chart-container edu-chart-container">
+                        <canvas id="educationChart"></canvas>
+                    </div>
+                    <div class="chart-legend mt-3">
+                        <div class="row">
+                            @foreach (var edu in Model.EducationDistribution)
+                            {
+                                <div class="col-6">
+                                    <div class="d-flex align-items-center mb-1">
+                                        <span class="legend-dot" style="background-color: @GetColor(edu.Education, Model.EducationDistribution.IndexOf(edu))"></span>
+                                        <span>@edu.Education @edu.Percentage%</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 性别分布 -->
+        <div class="col-md-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="mb-3">性别分布</h6>
+                    <div class="gender-chart">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>男：</span>
+                            <span>@Model.GenderDistribution.MalePercentage%</span>
+                        </div>
+                        <div class="progress mb-2">
+                            <div class="progress-bar bg-primary" style="width: @Model.GenderDistribution.MalePercentage%" role="progressbar"></div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>女：</span>
+                            <span>@Model.GenderDistribution.FemalePercentage%</span>
+                        </div>
+                        <div class="progress mb-2">
+                            <div class="progress-bar bg-info" style="width: @Model.GenderDistribution.FemalePercentage%" role="progressbar"></div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between">
+                            <small>男：@Model.GenderDistribution.MaleCount 人</small>
+                            <small>女：@Model.GenderDistribution.FemaleCount 人</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 部门分布图表 - 使用全公司数据
+        var departmentCtx = document.getElementById('departmentChart').getContext('2d');
+        var departmentData = {
+            labels: [@Html.Raw(string.Join(",", companyModel.DepartmentDistribution.Select(d => $"'{d.Department}'")))],
+            datasets: [{
+                data: [@string.Join(",", companyModel.DepartmentDistribution.Select(d => d.Percentage.ToString()))],
+                backgroundColor: [
+                    '#4166f5',
+                    '#42A5F5',
+                    '#26C6DA',
+                    '#9CCC65',
+                    '#FFD54F',
+                    '#FF7043'
+                ],
+                borderWidth: 0
+            }]
+        };
+        
+        var departmentChart = new Chart(departmentCtx, {
+            type: 'pie',
+            data: departmentData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                cutout: '0%'
+            }
+        });
+        
+        // 学历分布图表 - 使用当前选择的部门数据
+        var educationCtx = document.getElementById('educationChart').getContext('2d');
+        var educationData = {
+            labels: [@Html.Raw(string.Join(",", Model.EducationDistribution.Select(d => $"'{d.Education}'")))],
+            datasets: [{
+                data: [@string.Join(",", Model.EducationDistribution.Select(d => d.Percentage.ToString()))],
+                backgroundColor: [
+                    '#4166f5',
+                    '#42A5F5',
+                    '#26C6DA',
+                    '#9CCC65'
+                ],
+                borderWidth: 0
+            }]
+        };
+        
+        var educationChart = new Chart(educationCtx, {
+            type: 'doughnut',
+            data: educationData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+        
+        // 部门筛选切换 - 只加载底部区域数据
+        function changeDepartment(department) {
+            // 构建URL
+            var url = department === '全公司' 
+                ? '@Url.Action("Collective", "Profile")'
+                : '@Url.Action("DepartmentCollective", "Profile")?department=' + encodeURIComponent(department);
+                
+            // 加载动画
+            document.getElementById('departmentData').innerHTML = '<div class="col-12 text-center py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">加载中...</span></div></div>';
+            
+            // 保存到历史记录，但不重新加载整个页面
+            window.history.pushState({}, '', url);
+            
+            // 使用JavaScript重新加载页面
+            location.reload();
+            
+            // 注意：这里仍然会重新加载整个页面
+            // 一个更完整的解决方案需要在Controller层进行修改，添加AJAX端点
+            // 或者使用视图组件提供部分视图更新
+        }
+    </script>
+    
+    <style>
+        /* 自定义样式 */
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .chart-container {
+            height: 200px;
+            position: relative;
+        }
+        
+        .age-chart-container, .level-chart-container {
+            height: 210px;
+            overflow-y: auto;
+        }
+        
+        .edu-chart-container {
+            height: 140px;
+        }
+        
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 10px;
+            color: white;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .tag-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .tag-count {
+            margin-left: 10px;
+            font-weight: 600;
+        }
+        
+        .metric-box {
+            background-color: #e9ecef;
+            padding: 10px 15px;
+            border-radius: 8px;
+            flex: 1;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .bg-purple {
+            background-color: #9c27b0;
+        }
+        
+        .chart-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .small-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 12px;
+            height: 100px;
+        }
+    </style>
+} 

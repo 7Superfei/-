@@ -1,0 +1,576 @@
+@model EmployeeDetailsViewModel
+@{
+    ViewData["Title"] = $"{Model.Employee.Name} - 详细信息";
+}
+
+<div class="container-fluid p-3">
+    <div class="card mb-3">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">员工详细信息</h5>
+                <a href="@Url.Action("Employee", "Profile", new { id = Model.Employee.EmployeeId })" class="btn btn-sm btn-outline-primary">
+                    <i class="bi bi-arrow-left"></i> 返回画像
+                </a>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <div class="avatar-circle mx-auto mb-3">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <h5 class="mb-0">@Model.Employee.Name</h5>
+                                <div class="text-muted">@Model.Employee.Department - @Model.Employee.PositionLevel</div>
+                            </div>
+                            <hr />
+                            <div class="fw-bold mb-2">综合评分</div>
+                            <div class="text-center mb-3">
+                                <div class="score-display">
+                                    <span class="score-value">@Model.Profile.OverallScore.ToString("F2")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-9">
+                    <div class="accordion" id="employeeDetailsAccordion">
+                        <!-- 基本信息 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingBasic">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBasic" aria-expanded="true" aria-controls="collapseBasic">
+                                    基本信息
+                                </button>
+                            </h2>
+                            <div id="collapseBasic" class="accordion-collapse collapse show" aria-labelledby="headingBasic" data-bs-parent="#employeeDetailsAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">员工ID</div>
+                                                <div class="value">@Model.Employee.EmployeeId</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">姓名</div>
+                                                <div class="value">@Model.Employee.Name</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">性别</div>
+                                                <div class="value">@Model.Employee.Gender</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">电话</div>
+                                                <div class="value">@Model.Employee.Phone</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">年龄</div>
+                                                <div class="value">@Model.Employee.Age</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">入职时间</div>
+                                                <div class="value">@Model.Employee.HireDate.ToString("yyyy-MM-dd")</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">籍贯</div>
+                                                <div class="value">@Model.Employee.Birthplace</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">婚姻状况</div>
+                                                <div class="value">@Model.Employee.MaritalStatus</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">住房压力</div>
+                                                <div class="value">@Model.Employee.MortgagePressure</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 学历背景 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingEducation">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEducation" aria-expanded="false" aria-controls="collapseEducation">
+                                    学历背景
+                                </button>
+                            </h2>
+                            <div id="collapseEducation" class="accordion-collapse collapse" aria-labelledby="headingEducation" data-bs-parent="#employeeDetailsAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">毕业院校</div>
+                                                <div class="value">@Model.Employee.Education</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">学历层次</div>
+                                                <div class="value">@Model.Employee.AcademicLevel</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">专业类别</div>
+                                                <div class="value">@Model.Employee.MajorCategory</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">具体专业</div>
+                                                <div class="value">@Model.Employee.SpecificMajor</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">第二专业类别</div>
+                                                <div class="value">@(Model.Employee.SecondMajorCategory ?? "无")</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">第二具体专业</div>
+                                                <div class="value">@(Model.Employee.SecondSpecificMajor ?? "无")</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 从业经历 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingExperience">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExperience" aria-expanded="false" aria-controls="collapseExperience">
+                                    从业经历
+                                </button>
+                            </h2>
+                            <div id="collapseExperience" class="accordion-collapse collapse" aria-labelledby="headingExperience" data-bs-parent="#employeeDetailsAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">工作年限</div>
+                                                <div class="value">@Model.Employee.WorkYears 年</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">公司类型</div>
+                                                <div class="value">@Model.Employee.CompanyType</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 工作情况 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingWork">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWork" aria-expanded="false" aria-controls="collapseWork">
+                                    工作情况
+                                </button>
+                            </h2>
+                            <div id="collapseWork" class="accordion-collapse collapse" aria-labelledby="headingWork" data-bs-parent="#employeeDetailsAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">部门</div>
+                                                <div class="value">@Model.Employee.Department</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">职级</div>
+                                                <div class="value">@Model.Employee.PositionLevel</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">工龄</div>
+                                                @{
+                                                    var referenceDate = new DateTime(2025, 5, 15);
+                                                    var workDuration = referenceDate - Model.Employee.HireDate;
+                                                    var years = workDuration.Days / 365;
+                                                    var months = (workDuration.Days % 365) / 30;
+                                                }
+                                                <div class="value">@years 年 @months 个月</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">参与项目数量</div>
+                                                <div class="value">@Model.Employee.ProjectCount</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">工作环境满意度</div>
+                                                <div class="value">@Model.Employee.WorkEnvironmentSatisfaction</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">薪酬满意度</div>
+                                                <div class="value">@Model.Employee.SalarySatisfaction</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 绩效评估 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingPerformance">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePerformance" aria-expanded="false" aria-controls="collapsePerformance">
+                                    绩效评估
+                                </button>
+                            </h2>
+                            <div id="collapsePerformance" class="accordion-collapse collapse" aria-labelledby="headingPerformance" data-bs-parent="#employeeDetailsAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">第一季度绩效</div>
+                                                <div class="value">@Model.Employee.PerformanceMonth1</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">第二季度绩效</div>
+                                                <div class="value">@Model.Employee.PerformanceMonth2</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">第三季度绩效</div>
+                                                <div class="value">@Model.Employee.PerformanceMonth3</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="chart-container mt-3" style="height: 200px;">
+                                        <canvas id="detailPerformanceChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 个性特征 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingPersonality">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePersonality" aria-expanded="false" aria-controls="collapsePersonality">
+                                    个性特征
+                                </button>
+                            </h2>
+                            <div id="collapsePersonality" class="accordion-collapse collapse" aria-labelledby="headingPersonality" data-bs-parent="#employeeDetailsAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">MBTI性格类型</div>
+                                                <div class="value">@Model.Employee.PersonalityType</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 mb-3">
+                                            <div class="detail-item">
+                                                <div class="label">标签属性</div>
+                                                <div class="value tag-container">
+                                                    @foreach (var tag in Model.Profile.Tags)
+                                                    {
+                                                        <span class="employee-tag" style="background-color: @tag.Color;">
+                                                            @tag.Name
+                                                        </span>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 考勤记录 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingAttendance">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAttendance" aria-expanded="false" aria-controls="collapseAttendance">
+                                    考勤记录
+                                </button>
+                            </h2>
+                            <div id="collapseAttendance" class="accordion-collapse collapse" aria-labelledby="headingAttendance" data-bs-parent="#employeeDetailsAccordion">
+                                <div class="accordion-body">
+                                    @if (Model.Employee.AttendanceRecords.Any())
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>记录ID</th>
+                                                        <th>日期</th>
+                                                        <th>状态</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var record in Model.Employee.AttendanceRecords.OrderByDescending(r => r.Date))
+                                                    {
+                                                        <tr>
+                                                            <td>@record.RecordId</td>
+                                                            <td>@record.Date.ToString("yyyy-MM-dd")</td>
+                                                            <td>@record.Status</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted">暂无考勤记录</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 职位变动 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingPositionChanges">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePositionChanges" aria-expanded="false" aria-controls="collapsePositionChanges">
+                                    职位变动记录
+                                </button>
+                            </h2>
+                            <div id="collapsePositionChanges" class="accordion-collapse collapse" aria-labelledby="headingPositionChanges" data-bs-parent="#employeeDetailsAccordion">
+                                <div class="accordion-body">
+                                    @if (Model.Employee.PositionChanges.Any())
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>变动ID</th>
+                                                        <th>变动日期</th>
+                                                        <th>变动详情</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var change in Model.Employee.PositionChanges.OrderByDescending(c => c.ChangeDate))
+                                                    {
+                                                        <tr>
+                                                            <td>@change.ChangeId</td>
+                                                            <td>@change.ChangeDate.ToString("yyyy-MM-dd")</td>
+                                                            <td>@change.PositionChangeDescription</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted">暂无职位变动记录</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 项目经验 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingProjects">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProjects" aria-expanded="false" aria-controls="collapseProjects">
+                                    项目经验
+                                </button>
+                            </h2>
+                            <div id="collapseProjects" class="accordion-collapse collapse" aria-labelledby="headingProjects" data-bs-parent="#employeeDetailsAccordion">
+                                <div class="accordion-body">
+                                    @if (Model.Employee.ProjectExperiences.Any())
+                                    {
+                                        <div class="table-responsive">
+                                            <table class="table table-sm table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>经验ID</th>
+                                                        <th>项目级别</th>
+                                                        <th>项目角色</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var project in Model.Employee.ProjectExperiences)
+                                                    {
+                                                        <tr>
+                                                            <td>@project.ExperienceId</td>
+                                                            <td>@project.ProjectLevel</td>
+                                                            <td>@project.ProjectRole</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <p class="text-muted">暂无项目经验记录</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // 绩效折线图
+        var performanceCtx = document.getElementById('detailPerformanceChart').getContext('2d');
+        var performanceChart = new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: [@Html.Raw(string.Join(",", Model.Profile.PerformanceData.Select(p => $"'{p.Month}'")))],
+                datasets: [{
+                    label: '绩效表现',
+                    data: [@string.Join(",", Model.Profile.PerformanceData.Select(p => p.Value.ToString()))],
+                    fill: true,
+                    backgroundColor: 'rgba(65, 102, 245, 0.1)',
+                    borderColor: 'rgba(65, 102, 245, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: 'rgba(65, 102, 245, 1)',
+                    pointBorderWidth: 2,
+                    pointRadius: 4,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            callback: function(value) {
+                                // 将数值转换为绩效等级
+                                if (value >= 5.0) return 'A+';
+                                if (value >= 4.5) return 'A';
+                                if (value >= 4.0) return 'A-';
+                                if (value >= 3.5) return 'B+';
+                                if (value >= 3.0) return 'B';
+                                if (value >= 2.0) return 'C';
+                                return '';
+                            },
+                            stepSize: 0.5
+                        },
+                        min: 2.0,
+                        max: 5.0
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let value = context.raw;
+                                let grade = '';
+                                if (value >= 5.0) grade = 'A+';
+                                else if (value >= 4.5) grade = 'A';
+                                else if (value >= 4.0) grade = 'A-';
+                                else if (value >= 3.5) grade = 'B+';
+                                else if (value >= 3.0) grade = 'B';
+                                else if (value >= 2.0) grade = 'C';
+                                return `绩效: ${grade}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}
+
+<style>
+    .avatar-circle {
+        width: 80px;
+        height: 80px;
+        background-color: #f0f2ff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .avatar-circle i {
+        font-size: 40px;
+        color: #4166f5;
+    }
+    
+    .score-display {
+        display: inline-block;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-color: #f0f2ff;
+        color: #4166f5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid #4166f5;
+    }
+    
+    .score-value {
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .detail-item {
+        margin-bottom: 8px;
+    }
+    
+    .detail-item .label {
+        font-weight: 500;
+        color: #6c757d;
+        font-size: 14px;
+    }
+    
+    .detail-item .value {
+        font-weight: 500;
+    }
+    
+    .employee-tag {
+        display: inline-block;
+        padding: 2px 8px;
+        border-radius: 16px;
+        color: white;
+        font-size: 12px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background-color: #f0f2ff;
+        color: #4166f5;
+    }
+</style> 

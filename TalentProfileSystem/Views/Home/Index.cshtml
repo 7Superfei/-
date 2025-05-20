@@ -1,0 +1,208 @@
+@model List<Employee>
+@{
+    ViewData["Title"] = "人才画像系统";
+}
+
+<div class="container-fluid p-3">
+    <!-- 顶部搜索区域 -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <select class="form-select" id="departmentFilter">
+                        <option selected>部门筛选</option>
+                        <option value="技术部">技术部</option>
+                        <option value="产品部">产品部</option>
+                        <option value="市场部">市场部</option>
+                        <option value="销售部">销售部</option>
+                        <option value="运营部">运营部</option>
+                        <option value="设计部">设计部</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="employeeIdSearch" placeholder="输入工号">
+                        <button class="btn btn-outline-primary" type="button" id="idSearchButton">搜索</button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="employeeNameSearch" placeholder="输入姓名">
+                        <button class="btn btn-outline-primary" type="button" id="nameSearchButton">搜索</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 员工卡片组 -->
+    <div class="row employee-cards">
+        @foreach (var employee in Model)
+        {
+            <div class="col-md-4 mb-4 employee-card-item" data-employee-id="@employee.EmployeeId" data-employee-name="@employee.Name" data-department="@employee.Department">
+                <div class="card h-100 employee-profile-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="employee-avatar me-3">
+                                <div class="avatar-circle">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                            </div>
+                            <div class="employee-info">
+                                <h5 class="employee-name">@employee.Name</h5>
+                                <p class="employee-title text-muted mb-0">@employee.Department - @employee.PositionLevel</p>
+                            </div>
+                        </div>
+                        
+                        <div class="employee-details">
+                            <div class="detail-item">
+                                <span class="label">工号：</span>
+                                <span class="value">@($"{employee.EmployeeId:D6}")</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">部门：</span>
+                                <span class="value">@employee.Department</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">职级：</span>
+                                <span class="value">@employee.PositionLevel</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="label">入职时间：</span>
+                                <span class="value">@employee.HireDate.ToString("yyyy-MM-dd")</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent text-end">
+                        <a asp-controller="Profile" asp-action="Employee" asp-route-id="@employee.EmployeeId" class="btn btn-sm btn-primary">查看画像</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
+    <!-- 分页导航 -->
+    <nav aria-label="员工列表分页">
+        <ul class="pagination justify-content-center">
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            @for (int i = 2; i <= 5; i++)
+            {
+                <li class="page-item"><a class="page-link" href="#">@i</a></li>
+            }
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // 部门筛选
+            $("#departmentFilter").change(function() {
+                var department = $(this).val();
+                if (department === "部门筛选") {
+                    $(".employee-card-item").show();
+                } else {
+                    $(".employee-card-item").each(function() {
+                        var dept = $(this).data("department");
+                        $(this).toggle(dept === department);
+                    });
+                }
+            });
+            
+            // 工号搜索
+            $("#idSearchButton").click(function() {
+                var searchText = $("#employeeIdSearch").val().toLowerCase();
+                if (searchText.trim() === "") {
+                    $(".employee-card-item").show();
+                    return;
+                }
+                
+                $(".employee-card-item").each(function() {
+                    var employeeId = $(this).data("employee-id").toString().padStart(6, '0');
+                    $(this).toggle(employeeId.indexOf(searchText) > -1);
+                });
+            });
+            
+            // 姓名搜索
+            $("#nameSearchButton").click(function() {
+                var searchText = $("#employeeNameSearch").val().toLowerCase();
+                if (searchText.trim() === "") {
+                    $(".employee-card-item").show();
+                    return;
+                }
+                
+                $(".employee-card-item").each(function() {
+                    var employeeName = $(this).data("employee-name").toLowerCase();
+                    $(this).toggle(employeeName.indexOf(searchText) > -1);
+                });
+            });
+            
+            // 同时支持按回车键搜索
+            $("#employeeIdSearch").keypress(function(e) {
+                if (e.which === 13) {
+                    $("#idSearchButton").click();
+                }
+            });
+            
+            $("#employeeNameSearch").keypress(function(e) {
+                if (e.which === 13) {
+                    $("#nameSearchButton").click();
+                }
+            });
+        });
+    </script>
+    
+    <style>
+        /* 自定义样式 */
+        body {
+            background-color: #f5f5f5;
+        }
+        
+        .employee-profile-card {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .employee-profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .avatar-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #4166f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .employee-details {
+            margin-top: 20px;
+        }
+        
+        .detail-item {
+            margin-bottom: 8px;
+            display: flex;
+        }
+        
+        .detail-item .label {
+            width: 80px;
+            color: #666;
+        }
+        
+        .detail-item .value {
+            font-weight: 500;
+        }
+    </style>
+} 

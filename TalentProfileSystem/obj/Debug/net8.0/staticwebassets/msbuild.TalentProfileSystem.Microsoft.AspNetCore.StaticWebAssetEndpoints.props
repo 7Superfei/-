@@ -1,0 +1,76 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/css/site.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-mgZwWBRj22LKiUZNDRxRga2tsG8WhIq7mUb59JxAGTE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"4434"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022mgZwWBRj22LKiUZNDRxRga2tsG8WhIq7mUb59JxAGTE=\u0022"},{"Name":"Last-Modified","Value":"Mon, 12 May 2025 03:01:21 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/css/site.eeajq53eqp.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\site.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"eeajq53eqp"},{"Name":"integrity","Value":"sha256-mgZwWBRj22LKiUZNDRxRga2tsG8WhIq7mUb59JxAGTE="},{"Name":"label","Value":"_content/TalentProfileSystem/css/site.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"4434"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022mgZwWBRj22LKiUZNDRxRga2tsG8WhIq7mUb59JxAGTE=\u0022"},{"Name":"Last-Modified","Value":"Mon, 12 May 2025 03:01:21 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/images/default-avatar.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\default-avatar.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Nqnn8clbgv\u002B5l0PgxcTOldg8mkMKrFn4TvPL\u002BrYUUGg="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Nqnn8clbgv\u002B5l0PgxcTOldg8mkMKrFn4TvPL\u002BrYUUGg=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 02:53:20 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/images/default-avatar.yu78tspv7y.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\default-avatar.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"yu78tspv7y"},{"Name":"integrity","Value":"sha256-Nqnn8clbgv\u002B5l0PgxcTOldg8mkMKrFn4TvPL\u002BrYUUGg="},{"Name":"label","Value":"_content/TalentProfileSystem/images/default-avatar.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Nqnn8clbgv\u002B5l0PgxcTOldg8mkMKrFn4TvPL\u002BrYUUGg=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 02:53:20 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/js/site.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-gbLXVXCM4LGWX\u002BBPo4uV5BC2plNi\u002BAm\u002BfmReaRAag9I="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"647"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022gbLXVXCM4LGWX\u002BBPo4uV5BC2plNi\u002BAm\u002BfmReaRAag9I=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 02:52:17 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/js/site.jzowvq6esl.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\site.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"jzowvq6esl"},{"Name":"integrity","Value":"sha256-gbLXVXCM4LGWX\u002BBPo4uV5BC2plNi\u002BAm\u002BfmReaRAag9I="},{"Name":"label","Value":"_content/TalentProfileSystem/js/site.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"647"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022gbLXVXCM4LGWX\u002BBPo4uV5BC2plNi\u002BAm\u002BfmReaRAag9I=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 02:52:17 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/lib/bootstrap/dist/css/bootstrap.min.6a1nddaisu.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap\dist\css\bootstrap.min.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"6a1nddaisu"},{"Name":"integrity","Value":"sha256-wvj8BPEUsRexpyXui4vL621gfV\u002BV4z\u002Bb/FrB6DJAcWY="},{"Name":"label","Value":"_content/TalentProfileSystem/lib/bootstrap/dist/css/bootstrap.min.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"121"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022wvj8BPEUsRexpyXui4vL621gfV\u002BV4z\u002Bb/FrB6DJAcWY=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 03:02:56 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/lib/bootstrap/dist/css/bootstrap.min.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap\dist\css\bootstrap.min.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-wvj8BPEUsRexpyXui4vL621gfV\u002BV4z\u002Bb/FrB6DJAcWY="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"121"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u0022wvj8BPEUsRexpyXui4vL621gfV\u002BV4z\u002Bb/FrB6DJAcWY=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 03:02:56 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/lib/bootstrap/dist/js/bootstrap.bundle.min.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap\dist\js\bootstrap.bundle.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-t7At\u002BGAsWTAGHj391PYL8KUwj37v2slBhWnkPt19wKc="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"120"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022t7At\u002BGAsWTAGHj391PYL8KUwj37v2slBhWnkPt19wKc=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 03:03:14 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/lib/bootstrap/dist/js/bootstrap.bundle.min.zdku27n3p7.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\bootstrap\dist\js\bootstrap.bundle.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"zdku27n3p7"},{"Name":"integrity","Value":"sha256-t7At\u002BGAsWTAGHj391PYL8KUwj37v2slBhWnkPt19wKc="},{"Name":"label","Value":"_content/TalentProfileSystem/lib/bootstrap/dist/js/bootstrap.bundle.min.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"120"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022t7At\u002BGAsWTAGHj391PYL8KUwj37v2slBhWnkPt19wKc=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 03:03:14 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/lib/jquery/dist/jquery.min.5kqhz3yl1k.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\jquery\dist\jquery.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"5kqhz3yl1k"},{"Name":"integrity","Value":"sha256-te8pBoChaZQEWIawly3xuLplfhDB1Ew\u002Bq6hJGGhRZl4="},{"Name":"label","Value":"_content/TalentProfileSystem/lib/jquery/dist/jquery.min.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"117"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022te8pBoChaZQEWIawly3xuLplfhDB1Ew\u002Bq6hJGGhRZl4=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 03:03:05 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/TalentProfileSystem/lib/jquery/dist/jquery.min.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\lib\jquery\dist\jquery.min.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-te8pBoChaZQEWIawly3xuLplfhDB1Ew\u002Bq6hJGGhRZl4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"117"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022te8pBoChaZQEWIawly3xuLplfhDB1Ew\u002Bq6hJGGhRZl4=\u0022"},{"Name":"Last-Modified","Value":"Thu, 08 May 2025 03:03:05 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+  </ItemGroup>
+</Project>

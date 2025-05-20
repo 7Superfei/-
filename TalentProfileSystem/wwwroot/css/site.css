@@ -1,0 +1,255 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+  background-color: #f8f9fa;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+/* 卡片样式增强 */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+  border: none;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+  background-color: #f8f9fb;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 15px 20px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-footer {
+  background-color: rgba(0, 0, 0, 0.02);
+  padding: 12px 20px;
+}
+
+/* 表格样式 */
+.table th {
+  font-weight: 600;
+  color: #495057;
+  background-color: #f8f9fa;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+/* 徽章样式 */
+.badge {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.progress {
+  height: 10px;
+  border-radius: 5px;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+  background-color: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  min-height: calc(100vh - 60px);
+}
+
+.sidebar-header {
+  padding: 15px 0;
+}
+
+.list-group-item {
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+  border-left: 3px solid #0d6efd;
+}
+
+/* 员工卡片样式 */
+.employee-card-item .card {
+  height: 100%;
+}
+
+.employee-avatar img {
+  border: 3px solid #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 修改按钮样式 */
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+  transform: translateY(-1px);
+}
+
+.btn-outline-primary {
+  border-color: #0d6efd;
+  color: #0d6efd;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: white;
+}
+
+/* 雷达图容器 */
+#radarChart {
+  margin: 20px auto;
+  max-height: 300px;
+}
+
+/* 性能图表容器 */
+#performanceChart {
+  margin: 20px auto;
+  max-height: 300px;
+}
+
+/* 搜索框样式 */
+.form-control {
+  padding: 10px 15px;
+  border-radius: 6px;
+  border: 1px solid #e2e6ea;
+}
+
+.form-control:focus {
+  border-color: #0d6efd;
+}
+
+/* 分页样式 */
+.pagination .page-link {
+  margin: 0 3px;
+  border-radius: 5px;
+  color: #0d6efd;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 人才稀缺和冗余部门样式 */
+.small-card {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+.talent-status-list {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.talent-status-item {
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  background-color: #f8f9fa;
+  border-left: 3px solid;
+}
+
+.talent-status-item:last-child {
+  margin-bottom: 0;
+}
+
+.talent-status-item.bg-danger {
+  border-left-color: #dc3545;
+  background-color: rgba(220, 53, 69, 0.1);
+}
+
+.talent-status-item.bg-warning {
+  border-left-color: #ffc107;
+  background-color: rgba(255, 193, 7, 0.1);
+}
+
+.talent-status-item.bg-info {
+  border-left-color: #0dcaf0;
+  background-color: rgba(13, 202, 240, 0.1);
+}
+
+.talent-status-item .progress {
+  height: 5px;
+}
+
+.talent-status-item .progress-bar.bg-danger {
+  background-color: #dc3545;
+}
+
+.talent-status-item .progress-bar.bg-warning {
+  background-color: #ffc107;
+}
+
+.talent-status-item .progress-bar.bg-info {
+  background-color: #0dcaf0;
+} 

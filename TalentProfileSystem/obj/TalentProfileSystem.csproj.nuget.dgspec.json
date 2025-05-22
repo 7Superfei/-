@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\27811\\Desktop\\人才画像系统 - 完全体版本\\TalentProfileSystem\\TalentProfileSystem.csproj": {}
+    "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\TalentProfileSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\27811\\Desktop\\人才画像系统 - 完全体版本\\TalentProfileSystem\\TalentProfileSystem.csproj": {
+    "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\TalentProfileSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\27811\\Desktop\\人才画像系统 - 完全体版本\\TalentProfileSystem\\TalentProfileSystem.csproj",
+        "projectUniqueName": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\TalentProfileSystem.csproj",
         "projectName": "TalentProfileSystem",
-        "projectPath": "C:\\Users\\27811\\Desktop\\人才画像系统 - 完全体版本\\TalentProfileSystem\\TalentProfileSystem.csproj",
+        "projectPath": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\TalentProfileSystem.csproj",
         "packagesPath": "C:\\Users\\27811\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\27811\\Desktop\\人才画像系统 - 完全体版本\\TalentProfileSystem\\obj\\",
+        "outputPath": "C:\\Users\\27811\\Desktop\\人才画像系统\\TalentProfileSystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Visual Studio\\Shared\\NuGetPackages"
